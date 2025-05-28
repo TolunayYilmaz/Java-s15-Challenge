@@ -3,8 +3,9 @@ package org.example;
 import org.example.enums.Status;
 
 import java.util.Date;
+import java.util.Objects;
 
-public class Book {
+public class Book implements Comparable<Book>{
 
 
     private int book_ID;
@@ -18,7 +19,7 @@ public class Book {
     private String owner;
 
 
-    public Book(int book_ID, String name, double price, byte edition, Date date_of_purchase,Author author) {
+    public Book(int book_ID, String name, double price, byte edition, Date date_of_purchase, Author author) {
         this.book_ID = book_ID;
         this.name = name;
         this.price = price;
@@ -65,4 +66,24 @@ public class Book {
        }
     }
 
+    public double getPrice() {
+        return price;
+    }
+    @Override
+    public boolean equals(Object object) {
+        if (object == null || getClass() != object.getClass()) return false;
+        Book book = (Book) object;
+        return Objects.equals(name, book.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(name);
+    }
+
+
+    @Override
+    public int compareTo(Book other) {
+        return this.name.compareTo(other.name);//Listelerde name göre sıralar
+    }
 }

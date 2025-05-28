@@ -1,45 +1,46 @@
 package org.example;
 import org.example.interfaces.IBookFactory;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class Library extends BaseBook implements IBookFactory {
 
     private  Map<Integer, Reader> readers;
 
-    public Library(Map<Integer, Reader> readers,Map<Integer,Book> books) {
-        this.readers=readers;
-        this.books=books;
-        if(this.books==null){
-            this.books = new HashMap<>();
-        }
-        if(this.readers==null){
-            this.readers=  new HashMap<>();
-        }
-
+    public Library(TreeMap<Integer, Book> books, Map<Integer, Reader> readers) {
+        super(books);
+        this.readers = readers;
+            if(super.books==null){
+                super.books = new TreeMap<>();
+            }
+            if(this.readers==null){
+                this.readers=  new HashMap<>();
+            }
 
     }
 
     public void getBooks(){
 
-        for (Map.Entry<Integer, Book> entry : books.entrySet()) {
-            Book book = entry.getValue();
+        for (Book book: books.values()) {
+
             System.out.println(book.display());  // display() String döndürüyor ve onu yazdırıyoruz
         }
 
     }
-    public void getReader(){
+    public TreeSet<Book> getBooksComparetoName() {
+        return new TreeSet<>(books.values());
+    }
+    public void getReadersPrint(){
 
-        for (Map.Entry<Integer, Reader> entry : readers.entrySet()) {
-            Reader reader = entry.getValue();
+        for (Reader reader : readers.values()) {
+
             System.out.println(reader.name);
         }
 
     }
 
     public Map<Integer, Reader> getReaders() {
-        return readers;
+        return Collections.unmodifiableMap(readers);
     }
 
     public void newBook(Book book){
@@ -53,6 +54,9 @@ public class Library extends BaseBook implements IBookFactory {
     }
     public void takeBackBook(Book book){
      this.books.put(book.getBook_ID(),book);
+    }
+    public void newReaders(memberRecord member){
+        readers.put(member.getId(),member);
     }
 
 }

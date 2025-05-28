@@ -1,13 +1,13 @@
 package org.example;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
 
 
-public class Reader extends Person {
+public abstract class Reader extends Person {
 
-
-    public Reader(String name) {
-        this.books = new HashMap<>();
-        super.name=name;
+    public Reader(TreeMap<Integer, Book> books, String name) {
+        super(books, name);
     }
 
     @Override
@@ -27,4 +27,5 @@ public class Reader extends Person {
     public void purchaseBook(Book book){
         this.books.put(book.getBook_ID(),book);
     }
+
 }
