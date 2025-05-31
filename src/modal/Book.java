@@ -1,5 +1,6 @@
 package modal;
 
+import utils.enums.Category;
 import utils.enums.Status;
 import utils.interfaces.Identify;
 
@@ -13,24 +14,28 @@ public class Book implements Comparable<Book>, Identify {
     private Author author;
     private  String name;
     private double price;
-    private Status status;
+    private String status;
     private byte edition;
     private Date date_of_purchase;
-
+    private Category category;
     private String owner;
 
 
-    public Book(int book_ID, String name, double price, byte edition, Date date_of_purchase, Author author) {
+    public Book(int book_ID,Category category, String name, double price, byte edition, Date date_of_purchase, Author author) {
         this.book_ID = book_ID;
         this.name = name;
         this.price = price;
-        this.status =Status.Library;
+        this.status ="Library";
         this.edition = edition;
         this.date_of_purchase = date_of_purchase;
         this.author = author;
+        this.category=category;
 
     }
 
+    public Category getCategory() {
+        return category;
+    }
 
     public int getID() {
         return book_ID;
@@ -52,7 +57,7 @@ public class Book implements Comparable<Book>, Identify {
         }
 
     }
-    public void updateStatus(Status status){
+    public void updateStatus(String status){
         if(this.status!=null){
             this.status=status;
         }

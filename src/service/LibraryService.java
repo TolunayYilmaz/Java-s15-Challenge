@@ -11,6 +11,7 @@ import java.util.*;
 public class LibraryService {
     private BookRepository bookRepository;
     private ReaderRepository readerRepository;
+
     public LibraryService(BookRepository bookRepository, ReaderRepository readerRepository) {
 
         this.bookRepository=bookRepository;
@@ -53,10 +54,13 @@ public class LibraryService {
         return book;
 
     }
-    public void takeBackBook(Book book){
-        this.bookRepository.create(book);
+    public void takeBackBook(Book book,String status){
+        newBook(book);
+        this.bookRepository.getById(book.getID()).updateStatus(status);
     }
     public void newReaders(MemberRecord member){
         readerRepository.create(member);
     }
+
+
 }

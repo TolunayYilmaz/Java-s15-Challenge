@@ -1,10 +1,14 @@
 package service;
 
+import modal.Author;
 import modal.Book;
 import modal.MemberRecord;
 import modal.Reader;
 import repository.BookRepository;
 import repository.ReaderRepository;
+import utils.enums.Category;
+
+import java.util.List;
 
 public class LibrarianService {
 
@@ -31,12 +35,30 @@ public class LibrarianService {
         return sum;
     }
     public void createBill(MemberRepositoryService member, int bookId){
-        Book book =libraryService.lendBook(bookId);
-        member.payBill(book.getPrice());
-        member.purchaseBook(book);
+
+        if(member.getMaxBookLimit()==0){
+            System.out.println("Kitap alamaz "+member.whoyouare());
+        }
+        else{
+            member.decBookIssued();
+            Book book =libraryService.lendBook(bookId);
+            member.payBill(book.getPrice());
+            member.purchaseBook(book);
+            System.out.println(bookId+" Kitap satın aldı "+member.whoyouare());
+        }
+
     }
-    public void returnBook(Book book) {
-        libraryService.takeBackBook(book);
+    public void returnBook(MemberRepositoryService member,Book book) {
+        member.incBookIssued();
+        libraryService.takeBackBook(book,member.whoyouare());
+
+    }
+    public List<Book> getCategoryBooks(Category category){
+
+       return libraryService.getBooks().stream().filter(book->book.getCategory()==category).toList();
+    }
+    public List<Book> getAuthorBooks(Author author){
+        return libraryService.getBooks().stream().filter(book -> book.getAuthor().equals(author.getName())).toList();
     }
 
 }

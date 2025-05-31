@@ -25,16 +25,26 @@ public class MemberRepositoryService extends ReaderService{
     }
     public void decBookIssued(){
         int maxBookLimit=  memberRecord.getMaxBookLimit();
-        maxBookLimit-=1;
+        if (maxBookLimit>0){
+            maxBookLimit-=1;
+        }
         memberRecord.setMaxBookLimit(maxBookLimit);
     }
     public void payBill(double amount){
         double  thisAmount=  memberRecord.getAmount();
         thisAmount+=amount;
         memberRecord.setAmount(thisAmount);
-    }
 
+    }
+   public int getMaxBookLimit(){
+      return  memberRecord.getMaxBookLimit();
+   }
     public double getAmount() {
         return memberRecord.getAmount();
+    }
+
+    @Override
+    public String whoyouare() {
+        return memberRecord.getName();
     }
 }

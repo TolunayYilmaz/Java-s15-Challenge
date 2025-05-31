@@ -5,7 +5,7 @@ import modal.Book;
 import modal.Reader;
 import repository.BookRepository;
 
-public class ReaderService extends PersonService{
+public abstract class ReaderService extends PersonService{
     private BookRepository bookRepository;
     private Reader reader;
     public ReaderService(BookRepository bookRepository, Reader reader) {
@@ -36,8 +36,5 @@ public class ReaderService extends PersonService{
         return bookRepository;
     }
 
-    @Override
-    public String whoyouare() {
-        return  this.getReader().getName();
-    }
+
 }
